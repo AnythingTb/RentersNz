@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using RentersNz.Models.Entities;
 
 namespace RentersNz.Areas.Identity.Data;
 
@@ -11,6 +12,7 @@ public class RentersNzDbContext : IdentityDbContext<IdentityUser>
     {
     }
 
+    public DbSet<Landlord> Landlord {  get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
