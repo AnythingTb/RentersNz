@@ -36,7 +36,7 @@ namespace RentersNz.Controllers
 
             };
 
-            await dbContext.Landlord.AddAsync(landlord);
+            await dbContext.Landlord.AddAsync(Landlord);
             await dbContext.SaveChangesAsync();
 
 
