@@ -1,0 +1,113 @@
+﻿@model RentersNz.Models.Landlord
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1 class="text-center mb-5 font-weight-bold font-montserrat h1-custom">Create a New Landlord</h1>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label font-weight-bold font-montserrat"></label>
+                <input asp-for="Name" class="form-control rounded-border-20" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label font-weight-bold font-montserrat"></label>
+                <input asp-for="Email" class="form-control rounded-border-20" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label font-weight-bold font-montserrat"></label>
+                <input asp-for="PhoneNumber" class="form-control rounded-border-20" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div><div class="form-group">
+                <label asp-for="Address" class="control-label font-weight-bold font-montserrat"></label>
+                <input asp-for="Address" class="form-control rounded-border-20" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label font-weight-bold font-montserrat"></label>
+                <input asp-for="City" class="form-control rounded-border-20" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Region" class="control-label font-weight-bold font-montserrat"></label>
+                <input asp-for="Region" class="form-control rounded-border-20" />
+                <span asp-validation-for="Region" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PostalCode" class="control-label font-weight-bold font-montserrat"></label>
+                <input asp-for="PostalCode" class="form-control rounded-border-20" />
+                <span asp-validation-for="PostalCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label font-weight-bold font-montserrat"></label>
+                <input asp-for="Description" class="form-control rounded-border-20" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group text-center">
+                <button type="submit" class="btn custom-button">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="text-center">
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+    body {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #333;
+        background-color: #f4f4f4;
+    }
+
+    h1.h1-custom {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #6c757d;
+        margin-bottom: 2rem;
+    }
+
+    .form-control {
+        border: 2px solid #333;
+        border-radius: 20px;
+        font-size: 16px;
+        padding: 8px;
+        margin-bottom: 10px;
+    }
+
+    .custom-button {
+        background-color: transparent;
+        border: 2px solid #ddd;
+        color: #333;
+        padding: 12px 24px;
+        border-radius: 20px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+    }
+
+        .custom-button:hover {
+            background-color: #ddd;
+            border-color: #333;
+            color: #333;
+        }
+
+    .rounded-border-20 {
+        border-radius: 20px;
+    }
+</style>

@@ -1,8 +1,8 @@
-﻿namespace RentersNz.Models.Entities
+﻿namespace RentersNz.Models
 {
     public class Landlord
     {
-        public Guid Id { get; set; }
+        public  int LandlordId { get; set; }
 
         public string Name { get; set; }
         public string Email { get; set; }

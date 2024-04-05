@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using RentersNz.Models.Entities;
+using RentersNz.Models;
 
 namespace RentersNz.Areas.Identity.Data;
 
@@ -20,4 +20,6 @@ public class RentersNzDbContext : IdentityDbContext<IdentityUser>
         // For example, you can rename the ASP.NET Identity table names and more.
         // Add your customizations after calling base.OnModelCreating(builder);
     }
+
+public DbSet<RentersNz.Models.Renter> Renter { get; set; } = default!;
 }

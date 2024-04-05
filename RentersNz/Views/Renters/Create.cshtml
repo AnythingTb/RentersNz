@@ -1,0 +1,63 @@
+﻿@model RentersNz.Models.Renter
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Renter</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="RenterName" class="control-label"></label>
+                <input asp-for="RenterName" class="form-control" />
+                <span asp-validation-for="RenterName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RenterDescription" class="control-label"></label>
+                <input asp-for="RenterDescription" class="form-control" />
+                <span asp-validation-for="RenterDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Bedrooms" class="control-label"></label>
+                <input asp-for="Bedrooms" class="form-control" />
+                <span asp-validation-for="Bedrooms" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Bathrooms" class="control-label"></label>
+                <input asp-for="Bathrooms" class="form-control" />
+                <span asp-validation-for="Bathrooms" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AnimalSupport" class="control-label"></label>
+                <input asp-for="AnimalSupport" class="form-control" />
+                <span asp-validation-for="AnimalSupport" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SquareFootprint" class="control-label"></label>
+                <input asp-for="SquareFootprint" class="form-control" />
+                <span asp-validation-for="SquareFootprint" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UnitorStandAlone" class="control-label"></label>
+                <input asp-for="UnitorStandAlone" class="form-control" />
+                <span asp-validation-for="UnitorStandAlone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

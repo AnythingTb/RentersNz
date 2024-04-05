@@ -1,0 +1,71 @@
+﻿@model IEnumerable<RentersNz.Models.Renter>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RenterName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RenterDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bedrooms)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bathrooms)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnimalSupport)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SquareFootprint)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitorStandAlone)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RenterName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RenterDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bedrooms)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bathrooms)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnimalSupport)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SquareFootprint)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitorStandAlone)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.RenterId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.RenterId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.RenterId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
