@@ -1,4 +1,21 @@
-﻿a.navbar-brand {
+﻿body {
+    background-image: url('/images/MainPage.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+a.navbar-brand {
     font-size: 2rem;
     font-weight: bold;
     color: #1b6ec2;
@@ -27,12 +44,6 @@ a {
     background-color: #1b6ec2;
     border: none;
     border-radius: 5px;
-}
-
-.navbar {
-    background-color: #f5f5f5;
-    padding: 1rem;
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 .footer {
