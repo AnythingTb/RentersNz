@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentersNz.Areas.Identity.Data;
 
@@ -11,9 +12,11 @@ using RentersNz.Areas.Identity.Data;
 namespace RentersNz.Migrations
 {
     [DbContext(typeof(RentersNzDbContext))]
-    partial class RentersNzDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240408220655_PropertyTable4")]
+    partial class PropertyTable4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
