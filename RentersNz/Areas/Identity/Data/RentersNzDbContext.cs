@@ -24,4 +24,8 @@ public class RentersNzDbContext : IdentityDbContext<IdentityUser>
 public DbSet<RentersNz.Models.Renter> Renter { get; set; } = default!;
 
 public DbSet<RentersNz.Models.Property> Property { get; set; } = default!;
+
+public DbSet<RentersNz.Models.Lease> Lease { get; set; } = default!;
+
+public DbSet<RentersNz.Models.Review> Review { get; set; } = default!;
 }
