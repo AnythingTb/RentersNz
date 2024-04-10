@@ -25,51 +25,6 @@
             font-weight: bold;
             margin-bottom: 2rem;
         }
-
-        .table {
-            border-radius: 10px;
-        }
-
-            .table th {
-                border-top: none;
-                border-bottom: 2px solid #ddd;
-                font-weight: bold;
-                color: #333;
-            }
-
-            .table td {
-                border-top: none;
-                border-bottom: 1px solid #ddd;
-                font-size: 1.1rem;
-                padding: 0.25rem 0.75rem;
-            }
-
-        .btn-group {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .btn {
-            margin: 0.25rem 0;
-            border-radius: 25px;
-        }
-
-        /* Style for dropdown menu */
-        .dropdown:hover .dropdown-menu {
-            display: block;
-        }
-
-        .house-image {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-        }
-
-        .house {
-            margin-bottom: 20px;
-        }
     </style>
 </head>
 <body>
@@ -83,8 +38,8 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" id="registerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <li class="nav-item dropdown" id="informationDropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="registerDropdown" role="button" aria-expanded="false">
                                 ℹ️ Information
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="registerDropdown">
@@ -117,48 +72,13 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-
     <script>
-        $(document).ready(function () {
-            generateHouses();
+        // Show dropdown on hover
+        $('#informationDropdown').hover(function () {
+            $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
+        }, function () {
+            $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
         });
-
-        function generateHouses() {
-            var houseGrid = $('#house-grid');
-            var houseTypes = ['house', 'apartment', 'unit', 'mansion'];
-
-            for (var i = 0; i < 500; i++) {
-                var price = Math.floor(Math.random() * 6900000) + 100000; // Random price between $100,000 and $7,000,000
-                var houseType = houseTypes[Math.floor(Math.random() * houseTypes.length)];
-
-                // Selecting random image for the house type
-                var houseImage;
-                switch (houseType) {
-                    case 'house':
-                        houseImage = 'https://source.unsplash.com/300x200/?house';
-                        break;
-                    case 'apartment':
-                        houseImage = 'https://source.unsplash.com/300x200/?apartment';
-                        break;
-                    case 'unit':
-                        houseImage = 'https://source.unsplash.com/300x200/?unit';
-                        break;
-                    case 'mansion':
-                        houseImage = 'https://source.unsplash.com/300x200/?mansion';
-                        break;
-                    default:
-                        houseImage = 'https://source.unsplash.com/300x200/?house';
-                        break;
-                }
-
-                var houseHtml = '<div class="col-md-3 house">' +
-                    '<img src="' + houseImage + '" class="house-image" alt="House">' +
-                    '<p>Price: $' + price.toLocaleString() + '</p>' +
-                    '</div>';
-
-                houseGrid.append(houseHtml);
-            }
-        }
     </script>
 </body>
 </html>
