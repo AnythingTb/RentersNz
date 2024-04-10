@@ -6,3 +6,89 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<div id="house-grid" class="row justify-content-center"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        generateHouses();
+    });
+
+    function generateHouses() {
+        var houseGrid = $('#house-grid');
+        var houseTypes = ['house', 'apartment', 'unit', 'mansion'];
+
+        for (var i = 0; i < 500; i++) {
+            var price = Math.floor(Math.random() * 6900000) + 100000; // Random price between $100,000 and $7,000,000
+            var houseType = houseTypes[Math.floor(Math.random() * houseTypes.length)];
+
+            // Selecting random image for the house type
+            var houseImage;
+            switch (houseType) {
+                case 'house':
+                    houseImage = 'https://source.unsplash.com/300x200/?house&' + i; // Adding unique identifier
+                    break;
+                case 'apartment':
+                    houseImage = 'https://source.unsplash.com/300x200/?apartment&' + i; // Adding unique identifier
+                    break;
+                case 'unit':
+                    houseImage = 'https://source.unsplash.com/300x200/?unit&' + i; // Adding unique identifier
+                    break;
+                case 'mansion':
+                    houseImage = 'https://source.unsplash.com/300x200/?mansion&' + i; // Adding unique identifier
+                    break;
+                default:
+                    houseImage = 'https://source.unsplash.com/300x200/?house&' + i; // Adding unique identifier
+                    break;
+            }
+
+            var houseHtml = '<div class="col-md-3 house">' +
+                '<img src="' + houseImage + '" class="house-image" alt="House">' +
+                '<p class="price" data-info="More info">Price: $' + price.toLocaleString() + '</p>' +
+                '</div>';
+
+            houseGrid.append(houseHtml);
+        }
+
+        // Hover effect to show more info when hovering over the price
+        $('.price').hover(
+            function () {
+                $(this).append('<span class="info">More info</span>');
+            },
+            function () {
+                $(this).find('.info').remove();
+            }
+        );
+    }
+</script>
+
+<style>
+    .house-image {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+    }
+
+    .house {
+        margin-bottom: 20px;
+    }
+
+    .price {
+        position: relative;
+        cursor: pointer;
+    }
+
+    .info {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+</style>
