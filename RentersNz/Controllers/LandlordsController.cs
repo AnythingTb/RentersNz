@@ -19,13 +19,13 @@ namespace RentersNz.Controllers
             _context = context;
         }
 
-        // GET: Landlords
+     
         public async Task<IActionResult> Index()
         {
             return View(await _context.Landlord.ToListAsync());
         }
 
-        // GET: Landlords/Details/5
+        
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,13 +43,13 @@ namespace RentersNz.Controllers
             return View(landlord);
         }
 
-        // GET: Landlords/Create
+    
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Landlords/Create
+    
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -65,7 +65,6 @@ namespace RentersNz.Controllers
             return View(landlord);
         }
 
-        // GET: Landlords/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,7 +80,7 @@ namespace RentersNz.Controllers
             return View(landlord);
         }
 
-        // POST: Landlords/Edit/5
+      
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -116,7 +115,7 @@ namespace RentersNz.Controllers
             return View(landlord);
         }
 
-        // GET: Landlords/Delete/5
+        
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,7 +133,7 @@ namespace RentersNz.Controllers
             return View(landlord);
         }
 
-        // POST: Landlords/Delete/5
+    
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
