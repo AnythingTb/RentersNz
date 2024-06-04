@@ -73,12 +73,6 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
     <script>
-        // Show dropdown on hover
-        $('#informationDropdown').hover(function () {
-            $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
-        }, function () {
-            $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
-        });
-    </script>
+
 </body>
 </html>

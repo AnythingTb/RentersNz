@@ -2,7 +2,7 @@
 {
     public class Landlord
     {
-        public  int LandlordId { get; set; }
+        public int LandlordId { get; set; }
 
         public string Name { get; set; }
         public string Email { get; set; }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RentersNz.Areas.Identity.Data;
 using RentersNz.Models;
@@ -19,13 +14,13 @@ namespace RentersNz.Controllers
             _context = context;
         }
 
-     
+
         public async Task<IActionResult> Index()
         {
             return View(await _context.Landlord.ToListAsync());
         }
 
-        
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,13 +38,13 @@ namespace RentersNz.Controllers
             return View(landlord);
         }
 
-    
+
         public IActionResult Create()
         {
             return View();
         }
 
-    
+
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -80,7 +75,7 @@ namespace RentersNz.Controllers
             return View(landlord);
         }
 
-      
+
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -115,7 +110,7 @@ namespace RentersNz.Controllers
             return View(landlord);
         }
 
-        
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -133,7 +128,7 @@ namespace RentersNz.Controllers
             return View(landlord);
         }
 
-    
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
