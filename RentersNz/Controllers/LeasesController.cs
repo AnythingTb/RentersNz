@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using RentersNz.Areas.Identity.Data;
 using RentersNz.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace RentersNz.Controllers
 {
@@ -15,9 +17,19 @@ namespace RentersNz.Controllers
         }
 
         // GET: Leases
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Lease.ToListAsync());
+            var leases = from l in _context.Lease
+                         select l;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                leases = leases.Where(s => s.PropertyId.ToString().Contains(searchString) || s.RenterId.ToString().Contains(searchString));
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            return View(await leases.ToListAsync());
         }
 
         // GET: Leases/Details/5
@@ -45,8 +57,6 @@ namespace RentersNz.Controllers
         }
 
         // POST: Leases/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("LeaseId,PropertyId,RenterId,StartDate,EndDate,DepositAmount,MonthlyRent,AdditionalTerms")] Lease lease)
@@ -77,8 +87,6 @@ namespace RentersNz.Controllers
         }
 
         // POST: Leases/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("LeaseId,PropertyId,RenterId,StartDate,EndDate,DepositAmount,MonthlyRent,AdditionalTerms")] Lease lease)
