@@ -1,4 +1,4 @@
-﻿﻿@{
+﻿@{
     ViewData["Title"] = "RentersNz";
 }
 
@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/RentersNz.styles.css" asp-append-version="true" />
+
+    <!-- Integrate Google Font - Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+
     <style>
         body {
             font-family: 'Montserrat', sans-serif;
@@ -24,6 +28,18 @@
             font-size: 2.5rem;
             font-weight: bold;
             margin-bottom: 2rem;
+            font-family: 'Roboto', sans-serif; /* Apply Roboto font to header title */
+            text-transform: uppercase; /* Uppercase text */
+            letter-spacing: 2px; /* Add letter spacing */
+            color: #333; /* Color for the header title */
+        }
+
+        .house-info {
+            display: none;
+        }
+
+        .house-listing:hover .house-info {
+            display: block;
         }
     </style>
 </head>
@@ -31,7 +47,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">RentersNz</a>
+                <h1 class="navbar-brand m-0 p-0" asp-area="" asp-controller="Home" asp-action="Index">RentersNz</h1>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -49,6 +65,7 @@
                                 <li><a class="dropdown-item" asp-area="" asp-controller="leases" asp-action="Index">Leases</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Reviews" asp-action="Index">Reviews</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Privacy" asp-action="Index">Privacy Policy</a></li>
+                           
                             </ul>
                         </li>
                     </ul>

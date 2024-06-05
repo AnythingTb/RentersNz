@@ -1,103 +1,103 @@
-﻿        @model IEnumerable<RentersNz.Models.Landlord>
+﻿@model IEnumerable<RentersNz.Models.Landlord>
 
-        @{
-            ViewData["Title"] = "Index";
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center mb-5">Landlords</h1>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <table class="table table-bordered table-striped table-hover text-center">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>Region</th>
+                    <th>Postal Code</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.Email)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.Address)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.City)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.Region)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.PostalCode)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.Description)</td>
+                        <td>
+                            <div class="btn-group">
+                                <a asp-action="Edit" asp-route-id="@item.LandlordId" class="btn btn-sm btn-outline-primary">Edit</a>
+                                <a asp-action="Details" asp-route-id="@item.LandlordId" class="btn btn-sm btn-outline-secondary">Details</a>
+                                <a asp-action="Delete" asp-route-id="@item.LandlordId" class="btn btn-sm btn-outline-danger">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="text-center">
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+    body {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #333;
+        background-color: #f4f4f4;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 2rem;
+    }
+
+    .table {
+        border-radius: 10px;
+    }
+
+        .table th {
+            border-top: none;
+            border-bottom: 2px solid #ddd;
+            font-weight: bold;
+            color: #333;
         }
 
-        <h1 class="text-center mb-5">Landlords</h1>
-
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <table class="table table-bordered table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone Number</th>
-                            <th>Address</th>
-                            <th>City</th>
-                            <th>Region</th>
-                            <th>Postal Code</th>
-                            <th>Description</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                                <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Address)</td>
-                                <td>@Html.DisplayFor(modelItem => item.City)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Region)</td>
-                                <td>@Html.DisplayFor(modelItem => item.PostalCode)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Description)</td>
-                                <td>
-                                    <div class="btn-group">
-                                        <a asp-action="Edit" asp-route-id="@item.LandlordId" class="btn btn-sm btn-outline-primary">Edit</a>
-                                        <a asp-action="Details" asp-route-id="@item.LandlordId" class="btn btn-sm btn-outline-secondary">Details</a>
-                                        <a asp-action="Delete" asp-route-id="@item.LandlordId" class="btn btn-sm btn-outline-danger">Delete</a>
-                                    </div>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="text-center">
-            <a asp-action="Create" class="btn btn-primary">Create New</a>
-        </div>
-
-        @section Scripts {
-            @{
-                await Html.RenderPartialAsync("_ValidationScriptsPartial");
-            }
+        .table td {
+            border-top: none;
+            border-bottom: 1px solid #ddd;
+            font-size: 1.1rem;
+            padding: 0.75rem;
         }
 
-        <style>
-            body {
-                font-family: 'Montserrat', sans-serif;
-                font-size: 16px;
-                line-height: 1.5;
-                color: #333;
-                background-color: #f4f4f4;
-            }
+    .btn-group {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-            h1 {
-                font-size: 2.5rem;
-                font-weight: bold;
-                margin-bottom: 2rem;
-            }
-
-            .table {
-                border-radius: 10px;
-            }
-
-                .table th {
-                    border-top: none;
-                    border-bottom: 2px solid #ddd;
-                    font-weight: bold;
-                    color: #333;
-                }
-
-                .table td {
-                    border-top: none;
-                    border-bottom: 1px solid #ddd;
-                    font-size: 1.1rem;
-                    padding: 0.75rem;
-                }
-
-            .btn-group {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .btn {
-                margin: 0 0.25rem;
-            }
-        </style>
+    .btn {
+        margin: 0 0.25rem;
+    }
+</style>
