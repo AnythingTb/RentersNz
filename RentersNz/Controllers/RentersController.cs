@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using RentersNz.Areas.Identity.Data;
 using RentersNz.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace RentersNz.Controllers
 {
@@ -15,9 +17,19 @@ namespace RentersNz.Controllers
         }
 
         // GET: Renters
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Renter.ToListAsync());
+            var renters = from r in _context.Renter
+                          select r;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                renters = renters.Where(s => s.RenterName.Contains(searchString));
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            return View(await renters.ToListAsync());
         }
 
         // GET: Renters/Details/5
@@ -45,8 +57,6 @@ namespace RentersNz.Controllers
         }
 
         // POST: Renters/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("RenterId,RenterName,RenterDescription,Bedrooms,Bathrooms,AnimalSupport,SquareFootprint,UnitorStandAlone")] Renter renter)
@@ -77,8 +87,6 @@ namespace RentersNz.Controllers
         }
 
         // POST: Renters/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("RenterId,RenterName,RenterDescription,Bedrooms,Bathrooms,AnimalSupport,SquareFootprint,UnitorStandAlone")] Renter renter)
