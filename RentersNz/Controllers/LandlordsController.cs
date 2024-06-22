@@ -4,6 +4,8 @@ using RentersNz.Areas.Identity.Data;
 using RentersNz.Models;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RentersNz.Controllers
 {
@@ -17,6 +19,7 @@ namespace RentersNz.Controllers
         }
 
         // GET: Landlords
+        [Authorize]
         public async Task<IActionResult> Index(string searchString)
         {
             var landlords = from l in _context.Landlord
@@ -33,6 +36,7 @@ namespace RentersNz.Controllers
         }
 
         // GET: Landlords/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -51,6 +55,7 @@ namespace RentersNz.Controllers
         }
 
         // GET: Landlords/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -71,6 +76,7 @@ namespace RentersNz.Controllers
         }
 
         // GET: Landlords/Edit/5
+        [Authorize(Roles = "Administrators")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -87,6 +93,7 @@ namespace RentersNz.Controllers
         }
 
         // POST: Landlords/Edit/5
+        [Authorize(Roles = "Administrators")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("LandlordId,Name,Email,PhoneNumber,Address,City,Region,PostalCode,Description")] Landlord landlord)
@@ -120,6 +127,7 @@ namespace RentersNz.Controllers
         }
 
         // GET: Landlords/Delete/5
+        [Authorize(Roles = "Administrators")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -138,6 +146,7 @@ namespace RentersNz.Controllers
         }
 
         // POST: Landlords/Delete/5
+        [Authorize(Roles = "Administrators")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
