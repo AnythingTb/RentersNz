@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RentersNz.Models;
 using System.Diagnostics;
-
+//Renters Controller 
 namespace RentersNz.Controllers
 {
     public class HomeController : Controller
