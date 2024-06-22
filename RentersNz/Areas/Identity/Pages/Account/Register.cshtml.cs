@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.Logging;
 
 namespace RentersNz.Areas.Identity.Pages.Account
@@ -47,16 +48,19 @@ namespace RentersNz.Areas.Identity.Pages.Account
         public string ReturnUrl { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
+        public string Protocol { get; private set; }
 
         public class InputModel
         {
             [Required]
-            [StringLength(32, ErrorMessage = "The First name field should have a maximum of 32 Characters", MinimumLength = 3)]
+            [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "The {0} field should only contain alphabetic characters.")]
+            [StringLength(32, ErrorMessage = "The {0} field should have a maximum of {1} characters.")]
             [Display(Name = "First Name")]
             public string FirstName { get; set; }
 
             [Required]
-            [StringLength(32, ErrorMessage = "The Last name field should have a maximum of 32 Characters", MinimumLength = 3)]
+            [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "The {0} field should only contain alphabetic characters.")]
+            [StringLength(32, ErrorMessage = "The {0} field should have a maximum of {1} characters.")]
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
 
@@ -66,8 +70,10 @@ namespace RentersNz.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long. Your Password Must Be at least 8 Characters Long and have At least one special character", MinimumLength = 8)]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 8)]
             [DataType(DataType.Password)]
+            [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
+                ErrorMessage = "The {0} must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.")]
             [Display(Name = "Password")]
             public string Password { get; set; }
 
@@ -76,7 +82,11 @@ namespace RentersNz.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            public bool IsValidEmail()
+            /// <summary>
+            /// Validates if the email domain is within a predefined list of allowed domains.
+            /// </summary>
+            /// <returns>True if the email domain is valid; otherwise, false.</returns>
+            public bool IsValidEmailDomain()
             {
                 string[] validDomains = { "gmail.com", "hotmail.com", "outlook.com", "onemail.com", "icloud.com" };
                 string domain = Email.Split('@').LastOrDefault()?.ToLower();
@@ -84,42 +94,49 @@ namespace RentersNz.Areas.Identity.Pages.Account
             }
         }
 
+        /// <summary>
+        /// Handles HTTP GET requests for the registration page.
+        /// </summary>
+        /// <param name="returnUrl">The URL to return to after registration.</param>
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
+        /// <summary>
+        /// Handles HTTP POST requests for the registration page.
+        /// </summary>
+        /// <param name="returnUrl">The URL to return to after registration.</param>
+        /// <returns>A task that represents the asynchronous registration operation.</returns>
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
             if (ModelState.IsValid)
             {
-                if (!Input.IsValidEmail())
+                if (!Input.IsValidEmailDomain())
                 {
                     ModelState.AddModelError(string.Empty, "Invalid email domain. Allowed domains are: gmail.com, hotmail.com, outlook.com, onemail.com, icloud.com.");
                     return Page();
                 }
 
-                var user = CreateUser();
+                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,
-                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
+                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+                        Protocol = Request.Scheme);
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
@@ -134,6 +151,7 @@ namespace RentersNz.Areas.Identity.Pages.Account
                         return LocalRedirect(returnUrl);
                     }
                 }
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
@@ -144,20 +162,10 @@ namespace RentersNz.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private IdentityUser CreateUser()
-        {
-            try
-            {
-                return Activator.CreateInstance<IdentityUser>();
-            }
-            catch
-            {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
-                    $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
-            }
-        }
-
+        /// <summary>
+        /// Retrieves the email store for the user.
+        /// </summary>
+        /// <returns>The email store for the user.</returns>
         private IUserEmailStore<IdentityUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)

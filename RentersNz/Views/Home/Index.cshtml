@@ -8,41 +8,91 @@
 </div>
 
 <div id="house-grid" class="row justify-content-center"></div>
+<div class="pagination">
+    <div id="page-info" class="page-info"></div>
+    <button id="prev-page" class="btn btn-primary">Previous</button>
+    <button id="next-page" class="btn btn-primary">Next</button>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
-        generateHouses();
+        var currentPage = 1; // Initialize current page
+        var totalPages = 100; // Total number of pages
+
+        updatePageInfo(currentPage, totalPages);
+        generateHouses(currentPage);
+
+        $('#prev-page').click(function () {
+            if (currentPage > 1) {
+                currentPage--;
+                updatePageInfo(currentPage, totalPages);
+                generateHouses(currentPage);
+            }
+        });
+
+        $('#next-page').click(function () {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updatePageInfo(currentPage, totalPages);
+                generateHouses(currentPage);
+            }
+        });
     });
 
-    function generateHouses() {
+    function generateHouses(page) {
+        var housesPerPage = 20;
         var houseGrid = $('#house-grid');
+        houseGrid.empty();
 
-        for (var i = 0; i < 500; i++) {
+        var start = (page - 1) * housesPerPage;
+        var end = start + housesPerPage;
+
+        for (var i = start; i < end; i++) {
             var price = Math.floor(Math.random() * 6900000) + 100000; // Random price between $100,000 and $7,000,000
-            var houseImage = 'https://source.unsplash.com/300x200/?house&' + i; // Adding unique identifier
+            var placeholderImage = 'https://via.placeholder.com/300x200'; // Placeholder image URL
 
             var houseHtml = '<div class="col-md-3 house">' +
-                '<img src="' + houseImage + '" class="house-image" alt="House">' +
-                '<div class="price">Price: $' + price.toLocaleString() + '</div>' +
+                '<img src="' + placeholderImage + '" class="house-image" alt="House">' +
+                '<div class="price" data-price="' + price + '">Price: $' + price.toLocaleString() + '</div>' +
                 '</div>';
 
             houseGrid.append(houseHtml);
         }
+
+        // Add hover effect to price tags
+        $('.price').hover(
+            function () {
+                $(this).text('View More').addClass('hover');
+            }, function () {
+                var price = $(this).data('price');
+                $(this).text('Price: $' + price.toLocaleString()).removeClass('hover');
+            }
+        );
+    }
+
+    function updatePageInfo(currentPage, totalPages) {
+        $('#page-info').text('Page ' + currentPage + ' out of ' + totalPages);
     }
 </script>
 
 <style>
-    .house-image {
-        width: 100%;
-        height: auto;
-        border-radius: 10px;
-    }
-
     .house {
         margin-bottom: 20px;
         position: relative;
         overflow: hidden; /* Ensures that the price text is not cropped */
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+        .house:hover {
+            transform: translateY(-5px);
+        }
+
+    .house-image {
+        width: 100%;
+        height: auto;
         border-radius: 10px;
     }
 
@@ -53,5 +103,38 @@
         color: #fff;
         padding: 5px 10px; /* Add padding to make the price text more visible */
         border-radius: 5px;
+        background: rgba(0, 0, 0, 0.6); /* Background color for better readability */
+        transition: all 0.3s ease;
+    }
+
+        .price.hover {
+            background: rgba(255, 255, 255, 0.8); /* Background color on hover */
+            color: #000;
+        }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        align-items: center;
+    }
+
+        .pagination .btn {
+            margin: 0 5px;
+            transition: all 0.3s ease;
+            border-radius: 20px; /* Rounded corners */
+            background-color: #333; /* Darker background color */
+            color: #ccc; /* Light gray text color */
+        }
+
+            .pagination .btn:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+    .page-info {
+        margin: 0 10px;
+        color: #666; /* Gray text color */
+        font-size: 16px;
     }
 </style>
