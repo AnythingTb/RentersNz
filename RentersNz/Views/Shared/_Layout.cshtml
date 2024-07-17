@@ -41,6 +41,18 @@
         .house-listing:hover .house-info {
             display: block;
         }
+
+        .house-listing {
+            display: inline-block;
+            width: 150px;
+            margin: 10px;
+            text-align: center;
+        }
+
+            .house-listing img {
+                width: 100%;
+                height: auto;
+            }
     </style>
 </head>
 <body>
@@ -65,7 +77,6 @@
                                 <li><a class="dropdown-item" asp-area="" asp-controller="leases" asp-action="Index">Leases</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Reviews" asp-action="Index">Reviews</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Privacy" asp-action="Index">Privacy Policy</a></li>
-                           
                             </ul>
                         </li>
                     </ul>
