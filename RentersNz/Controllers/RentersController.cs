@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RentersNz.Areas.Identity.Data;
 using RentersNz.Models;
@@ -17,6 +18,7 @@ namespace RentersNz.Controllers
         }
 
         // GET: Renters
+        [Authorize]
         public async Task<IActionResult> Index(string searchString)
         {
             var renters = from r in _context.Renter
@@ -33,6 +35,7 @@ namespace RentersNz.Controllers
         }
 
         // GET: Renters/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -51,12 +54,14 @@ namespace RentersNz.Controllers
         }
 
         // GET: Renters/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
         // POST: Renters/Create
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("RenterId,RenterName,RenterDescription,Bedrooms,Bathrooms,AnimalSupport,SquareFootprint,UnitorStandAlone")] Renter renter)
@@ -71,6 +76,7 @@ namespace RentersNz.Controllers
         }
 
         // GET: Renters/Edit/5
+        [Authorize(Roles = "Administrators")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -87,6 +93,7 @@ namespace RentersNz.Controllers
         }
 
         // POST: Renters/Edit/5
+        [Authorize(Roles = "Administrators")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("RenterId,RenterName,RenterDescription,Bedrooms,Bathrooms,AnimalSupport,SquareFootprint,UnitorStandAlone")] Renter renter)
@@ -120,6 +127,7 @@ namespace RentersNz.Controllers
         }
 
         // GET: Renters/Delete/5
+        [Authorize(Roles = "Administrators")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -138,6 +146,7 @@ namespace RentersNz.Controllers
         }
 
         // POST: Renters/Delete/5
+        [Authorize(Roles = "Administrators")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

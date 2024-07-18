@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using RentersNz.Models;
 using System.Diagnostics;
 
+
+
 namespace RentersNz.Controllers
 {
     public class HomeController : Controller
