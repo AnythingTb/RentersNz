@@ -76,7 +76,7 @@ namespace RentersNz.Controllers
         }
 
         // GET: Landlords/Edit/5
-        [Authorize(Roles = "Administrators")]
+        [Authorize(Roles = "Administrators , Testers")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -93,7 +93,7 @@ namespace RentersNz.Controllers
         }
 
         // POST: Landlords/Edit/5
-        [Authorize(Roles = "Administrators")]
+        [Authorize(Roles = "Administrators , Editors")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("LandlordId,Name,Email,PhoneNumber,Address,City,Region,PostalCode,Description")] Landlord landlord)

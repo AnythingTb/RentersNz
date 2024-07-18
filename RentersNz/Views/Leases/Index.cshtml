@@ -1,13 +1,24 @@
 ﻿@model IEnumerable<RentersNz.Models.Lease>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Leases";
 }
 
 <h1 class="text-center mb-5">Leases</h1>
 
-<div class="row justify-content-center">
+<div class="row justify-content-center mb-3">
     <div class="col-md-8">
+        <form asp-controller="Leases" asp-action="Index" method="get" class="input-group">
+            <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-control" placeholder="Search by Property ID, Renter ID, Start Date, End Date, etc.">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-10">
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
@@ -18,11 +29,19 @@
                     <th>Deposit Amount</th>
                     <th>Monthly Rent</th>
                     <th>Additional Terms</th>
-                    <th></th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @foreach (var item in Model.Where(x =>
+                (x.PropertyId.ToString().Contains(ViewData["CurrentFilter"]?.ToString() ?? "")) ||
+                (x.RenterId.ToString().Contains(ViewData["CurrentFilter"]?.ToString() ?? "")) ||
+                (x.StartDate.ToString("yyyy-MM-dd").Contains(ViewData["CurrentFilter"]?.ToString() ?? "")) ||
+                (x.EndDate.ToString("yyyy-MM-dd").Contains(ViewData["CurrentFilter"]?.ToString() ?? "")) ||
+                (x.DepositAmount.ToString().Contains(ViewData["CurrentFilter"]?.ToString() ?? "")) ||
+                (x.MonthlyRent.ToString().Contains(ViewData["CurrentFilter"]?.ToString() ?? "")) ||
+                (x.AdditionalTerms.Contains(ViewData["CurrentFilter"]?.ToString() ?? ""))
+                ))
                 {
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.PropertyId)</td>
@@ -47,7 +66,7 @@
 </div>
 
 <div class="text-center">
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Create New Lease</a>
 </div>
 
 @section Scripts {

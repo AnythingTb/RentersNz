@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using RentersNz.Areas.Identity.Data;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,17 +20,45 @@ builder.Services.AddDbContext<RentersNzDbContext>(options =>
             errorNumbersToAdd: null);
     }));
 
-// Configure Identity
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+// Configure Identity with roles
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = true;
+})
+    .AddRoles<IdentityRole>() // Add roles to Identity
     .AddEntityFrameworkStores<RentersNzDbContext>();
 
-
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();
-
-
 var app = builder.Build();
+
+// Seed roles and create admin user
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+    // Ensure roles exist
+    var roleNames = new[] { "Administrators", "Moderators", "Users" }; // Define roles you want to create
+    foreach (var roleName in roleNames)
+    {
+        if (!await roleManager.RoleExistsAsync(roleName))
+        {
+            await roleManager.CreateAsync(new IdentityRole(roleName));
+        }
+    }
+
+    // Example: Create admin user and assign to Administrators role
+    var adminEmail = "owner@gmail.com";
+    var adminUser = await userManager.FindByEmailAsync(adminEmail);
+    if (adminUser == null)
+    {
+        adminUser = new IdentityUser { UserName = adminEmail, Email = adminEmail };
+        await userManager.CreateAsync(adminUser, "Owner123**&&"); // Replace with your secure password
+
+        // Assign admin user to Administrators role
+        await userManager.AddToRoleAsync(adminUser, "Administrators");
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

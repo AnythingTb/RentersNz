@@ -6,6 +6,19 @@
 
 <h1 class="text-center mb-5">Properties</h1>
 
+<div class="row justify-content-center mb-4">
+    <div class="col-md-8">
+        <form asp-controller="Properties" asp-action="Index" method="get" class="form-inline">
+            <div class="input-group w-100">
+                <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-control" placeholder="Search properties...">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 <div class="row justify-content-center">
     <div class="col-md-8">
         <table class="table table-bordered table-striped table-hover">
@@ -106,4 +119,17 @@
     .btn {
         margin: 0 0.25rem;
     }
+
+    .input-group {
+        display: flex;
+        width: 100%;
+    }
+
+        .input-group .form-control {
+            flex: 1;
+        }
+
+        .input-group .input-group-append .btn {
+            margin: 0;
+        }
 </style>

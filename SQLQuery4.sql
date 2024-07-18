@@ -1,0 +1,22 @@
+INSERT INTO dbo.Landlords (Name, Email, PhoneNumber, Address, City, Region, PostalCode, Description) 
+VALUES 
+    ('John Doe', 'john.doe@example.com', '123-456-7890', '123 Main St', 'Anytown', 'AnyRegion', '12345', 'Software Engineer'),
+    ('Jane Smith', 'jane.smith@example.com', '987-654-3210', '456 Elm St', 'Othertown', 'SomeRegion', '54321', 'Graphic Designer'),
+    ('Michael Johnson', 'michael.johnson@example.com', '456-789-0123', '789 Oak St', 'Newtown', 'AnotherRegion', '67890', 'Teacher'),
+    ('Emily Brown', 'emily.brown@example.com', '234-567-8901', '234 Maple Ave', 'Smalltown', 'DifferentRegion', '23456', 'Accountant'),
+    ('Daniel Wilson', 'daniel.wilson@example.com', '789-012-3456', '567 Pine Rd', 'Bigtown', 'YetAnotherRegion', '78901', 'Marketing Specialist'),
+    ('Sarah Taylor', 'sarah.taylor@example.com', '345-678-9012', '890 Cedar Ln', 'Hometown', 'UniqueRegion', '89012', 'Writer'),
+    ('Matthew Martinez', 'matthew.martinez@example.com', '901-234-5678', '901 Birch Blvd', 'Villagetown', 'SpecialRegion', '01234', 'Chef'),
+    ('Jessica Garcia', 'jessica.garcia@example.com', '567-890-1234', '345 Oakwood Dr', 'Uptown', 'ExcitingRegion', '56789', 'Lawyer'),
+    ('David Anderson', 'david.anderson@example.com', '678-901-2345', '678 Walnut Ln', 'Downtown', 'AdventureRegion', '67890', 'Architect'),
+    ('Emma Hernandez', 'emma.hernandez@example.com', '890-123-4567', '789 Cedar Ave', 'Midtown', 'UnknownRegion', '89012', 'Doctor'),
+    ('Christopher Lopez', 'christopher.lopez@example.com', '432-109-8765', '321 Elm St', 'Easttown', 'MysteriousRegion', '32109', 'Entrepreneur'),
+    ('Olivia King', 'olivia.king@example.com', '210-987-6543', '543 Pine Ave', 'Westtown', 'SecretRegion', '54321', 'Consultant'),
+    ('Joshua Scott', 'joshua.scott@example.com', '654-321-0987', '876 Maple Dr', 'Northtown', 'MagicalRegion', '65432', 'Artist'),
+    ('Sophia Green', 'sophia.green@example.com', '123-890-7654', '987 Oak Blvd', 'Southtown', 'EnchantedRegion', '12389', 'Scientist'),
+    ('Andrew Carter', 'andrew.carter@example.com', '876-543-2109', '210 Cedar Ln', 'Oldtown', 'LegendaryRegion', '87654', 'Engineer'),
+    ('Isabella Adams', 'isabella.adams@example.com', '543-210-9876', '543 Birch Rd', 'Newtown', 'MythicalRegion', '54321', 'Photographer'),
+    ('James Stewart', 'james.stewart@example.com', '321-098-7654', '876 Maple Ave', 'Grandtown', 'EpicRegion', '21098', 'Developer'),
+    ('Ava Campbell', 'ava.campbell@example.com', '789-456-1230', '109 Pine Dr', 'Oldtown', 'LegendaryRegion', '78945', 'Athlete'),
+    ('Logan Mitchell', 'logan.mitchell@example.com', '987-654-3210', '987 Cedar Blvd', 'Youngtown', 'DreamRegion', '98765', 'Musician'),
+    ('Ella Thompson', 'ella.thompson@example.com', '456-789-0123', '234 Elm Ln', 'Middletown', 'WonderRegion', '45678', 'Professor');

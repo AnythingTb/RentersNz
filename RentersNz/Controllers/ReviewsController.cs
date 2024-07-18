@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RentersNz.Areas.Identity.Data;
 using RentersNz.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace RentersNz.Controllers
 {
@@ -17,9 +19,20 @@ namespace RentersNz.Controllers
 
         // GET: Reviews
         [Authorize]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Review.ToListAsync());
+            ViewData["CurrentFilter"] = searchString;
+
+            var reviews = from r in _context.Review
+                          select r;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                reviews = reviews.Where(r => r.RenterId.ToString().Contains(searchString)
+                                            || r.PropertyId.ToString().Contains(searchString));
+            }
+
+            return View(await reviews.ToListAsync());
         }
 
         // GET: Reviews/Details/5
@@ -50,8 +63,6 @@ namespace RentersNz.Controllers
 
         // POST: Reviews/Create
         [Authorize]
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ReviewId,RenterId,PropertyId,Rating,ReviewText")] Review review)
@@ -83,8 +94,6 @@ namespace RentersNz.Controllers
         }
 
         // POST: Reviews/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize(Roles = "Administrators")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -147,9 +156,8 @@ namespace RentersNz.Controllers
             if (review != null)
             {
                 _context.Review.Remove(review);
+                await _context.SaveChangesAsync();
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

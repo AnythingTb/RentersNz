@@ -4,46 +4,57 @@
     ViewData["Title"] = "Reviews";
 }
 
-<h1 class="text-center mb-4">Leave a Review</h1>
+<h1 class="text-center mb-5">Reviews</h1>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Renter ID</th>
-                        <th>Property ID</th>
-                        <th>Rating</th>
-                        <th>Review Text</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>@Html.DisplayFor(modelItem => item.RenterId)</td>
-                            <td>@Html.DisplayFor(modelItem => item.PropertyId)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Rating)</td>
-                            <td>@Html.DisplayFor(modelItem => item.ReviewText)</td>
-                            <td>
-                                <div class="btn-group">
-                                    <a asp-action="Edit" asp-route-id="@item.ReviewId" class="btn btn-sm btn-outline-dark">Edit</a>
-                                    <a asp-action="Details" asp-route-id="@item.ReviewId" class="btn btn-sm btn-outline-dark">Details</a>
-                                    <a asp-action="Delete" asp-route-id="@item.ReviewId" class="btn btn-sm btn-outline-dark">Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+<div class="row justify-content-center mb-3">
+    <div class="col-md-8">
+        <form asp-action="Index" method="get" class="input-group">
+            <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-control" placeholder="Search by Renter ID or Property ID">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        </form>
     </div>
 </div>
 
-<div class="text-center mt-3">
-    <a asp-action="Create" class="btn btn-primary">Leave a Review</a>
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Review ID</th>
+                    <th>Renter ID</th>
+                    <th>Property ID</th>
+                    <th>Rating</th>
+                    <th>Review Text</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.ReviewId)</td>
+                        <td>@Html.DisplayFor(modelItem => item.RenterId)</td>
+                        <td>@Html.DisplayFor(modelItem => item.PropertyId)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Rating)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ReviewText)</td>
+                        <td>
+                            <div class="btn-group">
+                                <a asp-action="Edit" asp-route-id="@item.ReviewId" class="btn btn-sm btn-outline-primary">Edit</a>
+                                <a asp-action="Details" asp-route-id="@item.ReviewId" class="btn btn-sm btn-outline-secondary">Details</a>
+                                <a asp-action="Delete" asp-route-id="@item.ReviewId" class="btn btn-sm btn-outline-danger">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="text-center">
+    <a asp-action="Create" class="btn btn-primary">Create New Review</a>
 </div>
 
 @section Scripts {
@@ -51,3 +62,47 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
+<style>
+    body {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #333;
+        background-color: #f4f4f4;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 2rem;
+    }
+
+    .table {
+        border-radius: 10px;
+    }
+
+        .table th {
+            border-top: none;
+            border-bottom: 2px solid #ddd;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .table td {
+            border-top: none;
+            border-bottom: 1px solid #ddd;
+            font-size: 1.1rem;
+            padding: 0.75rem;
+        }
+
+    .btn-group {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .btn {
+        margin: 0 0.25rem;
+    }
+</style>
