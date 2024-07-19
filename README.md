@@ -17,6 +17,8 @@ Make sure to press on the Community Edition
 (if you have already downloaded with .NET you can skip to step 3)
 
 Once you have installed Visual Studio Community, open the installer as Administrator. Click Modify > ASP.NET and web development (without this you cannot use the program). Wait for it to install 
+![image](https://github.com/user-attachments/assets/0d7d9968-4b62-468b-b52d-4970bffde329)
+
 
 Step 3: 
 
